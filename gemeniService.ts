@@ -2,11 +2,11 @@ import { GoogleGenAI } from "@google/genai";
 import { Donation, Expense } from "../types";
 
 export const getTrustInsights = async (donations: Donation[], expenses: Expense[], query: string) => {
-  // Accessing the injected API_KEY from vite define
-  const apiKey = (process.env as any).API_KEY;
+  // Vite injects this through the define config in vite.config.ts
+  const apiKey = process.env.API_KEY;
   
   if (!apiKey) {
-    return "క్షమించండి, AI సేవ అందుబాటులో లేదు. దయచేసి Vercel లో API_KEY సెట్టింగ్స్ తనిఖీ చేయండి.";
+    return "క్షమించండి, AI సేవ అందుబాటులో లేదు. దయచేసి Vercel Environment Variables లో API_KEY సెట్ చేయబడిందో లేదో తనిఖీ చేయండి.";
   }
 
   const ai = new GoogleGenAI({ apiKey });
@@ -18,7 +18,7 @@ export const getTrustInsights = async (donations: Donation[], expenses: Expense[
   const systemInstruction = `మీరు ఒక గౌరవనీయమైన దేవాలయ ట్రస్ట్ మేనేజ్మెంట్ అసిస్టెంట్. 
 దయచేసి భక్తులతో మరియు ట్రస్ట్ సభ్యులతో చాలా గౌరవంగా, వినయంగా మాట్లాడండి. 
 సమాధానాలు స్పష్టంగా తెలుగులో ఉండాలి.
-ప్రస్తుత లెక్కలు: మొత్తం విరాళాలు ₹${totalDonations}, మొత్తం ఖర్చులు ₹${totalExpenses}, నిల్వ ₹${balance}.`;
+ప్రస్తుత ట్రస్ట్ లెక్కలు: మొత్తం విరాళాలు ₹${totalDonations.toLocaleString('en-IN')}, మొత్తం ఖర్చులు ₹${totalExpenses.toLocaleString('en-IN')}, నిల్వ ₹${balance.toLocaleString('en-IN')}.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -33,6 +33,6 @@ export const getTrustInsights = async (donations: Donation[], expenses: Expense[
     return response.text || "క్షమించండి, సమాధానం దొరకలేదు.";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "క్షమించండి, ప్రస్తుతం AI సర్వర్ అందుబాటులో లేదు.";
+    return "క్షమించండి, ప్రస్తుతం AI సర్వర్ అందుబాటులో లేదు. దయచేసి కాసేపటి తర్వాత ప్రయత్నించండి.";
   }
 };
