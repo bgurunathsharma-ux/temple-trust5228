@@ -18,14 +18,18 @@ const App: React.FC = () => {
   const [showInstallGuide, setShowInstallGuide] = useState(false);
 
   useEffect(() => {
-    const d = localStorage.getItem('donations');
-    if (d) setDonations(JSON.parse(d));
-    const e = localStorage.getItem('expenses');
-    if (e) setExpenses(JSON.parse(e));
-    const ev = localStorage.getItem('events');
-    if (ev) setEvents(JSON.parse(ev));
-    const i = localStorage.getItem('inventory');
-    if (i) setInventory(JSON.parse(i));
+    try {
+      const d = localStorage.getItem('donations');
+      if (d) setDonations(JSON.parse(d));
+      const e = localStorage.getItem('expenses');
+      if (e) setExpenses(JSON.parse(e));
+      const ev = localStorage.getItem('events');
+      if (ev) setEvents(JSON.parse(ev));
+      const i = localStorage.getItem('inventory');
+      if (i) setInventory(JSON.parse(i));
+    } catch (err) {
+      console.error("Local storage error:", err);
+    }
   }, []);
 
   useEffect(() => {
