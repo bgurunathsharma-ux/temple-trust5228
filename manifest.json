@@ -1,0 +1,16 @@
+
+{
+  "name": "దేవాలయ ట్రస్ట్ మేనేజర్",
+  "short_name": "ట్రస్ట్ మేనేజర్",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#b91c1c",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3661/3661504.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
